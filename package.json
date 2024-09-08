@@ -1,0 +1,25 @@
+{
+	"name": "@hexlet/code",
+	"version": "1.0.0",
+	"description": "hexlet chat",
+	"main": "index.js",
+	"scripts": {
+		"build": "npm run build --prefix frontend",
+		"start": "start-server -s ./frontend/build",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"postinstall": "cd frontend && npm install"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/R1zd1ch/frontend-project-12.git"
+	},
+	"author": "EvgeniyCheraev",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/R1zd1ch/frontend-project-12/issues"
+	},
+	"homepage": "https://github.com/R1zd1ch/frontend-project-12#readme",
+	"dependencies": {
+		"@hexlet/chat-server": "^2.0.4"
+	}
+}
