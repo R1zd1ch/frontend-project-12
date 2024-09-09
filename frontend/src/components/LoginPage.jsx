@@ -1,7 +1,6 @@
-/* eslint-disable functional/no-expression-statement */
-import {
-  Button, Form, Col, Card, Row, Container, Image,
-} from 'react-bootstrap';
+/* eslint-disable object-curly-newline */
+
+import { Button, Form, Col, Card, Row, Container, Image } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';

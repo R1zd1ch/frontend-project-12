@@ -1,4 +1,3 @@
-/* eslint-disable functional/no-expression-statement */
 import './assets/application.scss';
 import './index.css';
 import ReactDOM from 'react-dom/client';
