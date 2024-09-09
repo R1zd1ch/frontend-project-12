@@ -1,7 +1,12 @@
 /* eslint-disable functional/no-expression-statement */
-
+import './assets/application.scss';
+import './index.css';
 import ReactDOM from 'react-dom/client';
 import init from './init.jsx';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(await init());
+const app = async () => {
+  const root = ReactDOM.createRoot(document.getElementById('chat'));
+  root.render(await init());
+};
+
+app();
