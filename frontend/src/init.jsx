@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import resources from './locales/index.js';
 import AuthProvider from './providers/AuthProvider.jsx';
-import store from './slices/index.js';
+import store from './slices';
 
 const init = async () => {
   const i18n = i18next.createInstance();

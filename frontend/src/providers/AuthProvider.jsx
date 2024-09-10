@@ -6,6 +6,7 @@ import AuthContext from '../contexts/AuthContext';
 const AuthProvider = ({ children }) => {
   const localToken = localStorage.getItem('userToken');
   const [token, setToken] = useState(localToken);
+
   const loggedIn = Boolean(token);
 
   const logIn = async (userData) => {
@@ -14,7 +15,6 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('userToken', newToken);
     setToken(newToken);
   };
-
   const logOut = () => {
     localStorage.removeItem('userToken');
     setToken(null);
