@@ -5,7 +5,7 @@ import { selectors as messagesSelectors } from '../slices/messagesSlice';
 const MessagesHeader = () => {
   const messagesCount = useSelector(messagesSelectors.selectTotal);
   const id = useSelector((state) => state.channels.currentChannelId);
-  const currentChannels = useSelector((state) => channelsSelectors.selectById(state, id));
+  const currentChannel = useSelector((state) => channelsSelectors.selectById(state, id));
 
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">

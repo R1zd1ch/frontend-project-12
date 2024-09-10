@@ -1,4 +1,6 @@
-import { Nav, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import {
+  Nav, Button, ButtonGroup, Dropdown,
+} from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentChannelId } from '../slices/channelsSlice';
 
@@ -15,7 +17,9 @@ const Removable = ({ id, name }) => {
           dispatch(setCurrentChannelId(id));
         }}
       >
-        <span className="me-1">#</span> {name}
+        <span className="me-1">#</span>
+        {' '}
+        {name}
       </Button>
       <Dropdown.Toggle split variant={id === currentChannelId ? 'secondary' : ''} />
       <Dropdown.Menu>
@@ -38,7 +42,9 @@ const NonRemovable = ({ id, name }) => {
         dispatch(setCurrentChannelId(id));
       }}
     >
-      <span className="me-1">#</span> {name}
+      <span className="me-1">#</span>
+      {' '}
+      {name}
     </Button>
   );
 };

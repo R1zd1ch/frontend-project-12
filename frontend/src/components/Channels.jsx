@@ -22,8 +22,8 @@ const Channels = () => {
         className="flex-column px-2 mb-3 overflow-auto h-100 d-block"
         id="channels-box"
       >
-        {channels &&
-          channels.map(({ id, name, removable }) => (
+        {channels
+          && channels.map(({ id, name, removable }) => (
             <ChannelButton key={id} id={id} name={name} removable={removable} />
           ))}
       </Nav>
