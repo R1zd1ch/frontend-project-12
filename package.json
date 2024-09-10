@@ -22,5 +22,8 @@
 	"dependencies": {
 		"@hexlet/chat-server": "^2.0.4",
 		"update": "^0.7.4"
+	},
+	"devDependencies": {
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11"
 	}
 }
