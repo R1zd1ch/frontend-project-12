@@ -1,2 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~react-toastify/dist/ReactToastify.css';
+
+.btn:disabled {
+  background-color: transparent;
+  border-color: transparent;
+}
