@@ -3,8 +3,9 @@
 import { Button, Form, Col, Card, Row, Container, Image } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import useAuth from '../hooks/useAuth';
 import loginImg from '../assets/login.jpg';
 
 const validationSchema = yup.object().shape({
@@ -13,18 +14,31 @@ const validationSchema = yup.object().shape({
 });
 // prettier-ignore
 const LoginPage = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
   const usernameInput = useRef(null);
+
+  const [authFailed, setAuthFailed] = useState(false);
 
   useEffect(() => {
     usernameInput.current.focus();
   }, []);
 
-  // const onSubmitFormik = (values, { setSubmitting }) => {
-  //   setTimeout(() => {
-  //     console.log(values);
-  //     setSubmitting(false);
-  //   }, 1000);
-  // };
+  const onSubmitFormik = async (values, { setSubmitting }) => {
+    setAuthFailed(false);
+    try {
+      await auth.logIn(values);
+      navigate('/');
+    } catch (err) {
+      setSubmitting(false);
+      if (err.isAxiosError && err.response.status === 401) {
+        setAuthFailed(true);
+        usernameInput.current.select();
+        return;
+      }
+      throw err;
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -34,12 +48,7 @@ const LoginPage = () => {
     validationSchema,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (values, { setSubmitting }) => {
-      setTimeout(() => {
-        console.log(values);
-        setSubmitting(false);
-      }, 1000);
-    },
+    onSubmit: onSubmitFormik,
   });
 
   const isUsernameInvalid = formik.errors.username && formik.touched.username;
@@ -61,6 +70,7 @@ const LoginPage = () => {
                     <Form.Control
                       type="text"
                       onChange={(e) => {
+                        setAuthFailed(false);
                         formik.handleChange(e);
                       }}
                       value={formik.values.username}
@@ -69,7 +79,7 @@ const LoginPage = () => {
                       autoComplete="username"
                       required
                       ref={usernameInput}
-                      isInvalid={isUsernameInvalid}
+                      isInvalid={authFailed || isUsernameInvalid}
                     />
                     <Form.Label>Ваш ник</Form.Label>
                     <Form.Control.Feedback
@@ -85,18 +95,19 @@ const LoginPage = () => {
                     <Form.Control
                       type="password"
                       onChange={(e) => {
+                        setAuthFailed(false);
                         formik.handleChange(e);
                       }}
                       value={formik.values.password}
                       onBlur={formik.handleBlur}
                       placeholder="Пароль"
                       autoComplete="password"
-                      isInvalid={isPasswordInvalid}
+                      isInvalid={authFailed || isPasswordInvalid}
                       required
                     />
                     <Form.Label>Пароль</Form.Label>
                     <Form.Control.Feedback type="invalid" className="invalid-feedback" tooltip>
-                      {formik.errors.password}
+                      {formik.errors.password || 'Неверные имя пользователя или пароль'}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Button type="submit" variant="outline-primary" className="w-100 mb-3">
