@@ -5,12 +5,6 @@ import { selectors as messagesSelectors } from '../slices/messagesSlice';
 const MessagesBox = () => {
   const messages = useSelector(messagesSelectors.selectAll);
   const channelId = useSelector((state) => state.channels.currentChannelId);
-  messages.filter((m) => {
-    console.log(m);
-    console.log(`m.channelId: ${m.channelId}`);
-    console.log(`channelId: ${channelId}`);
-    return m.channelId !== channelId;
-  });
 
   // prettier-ignore
   return (

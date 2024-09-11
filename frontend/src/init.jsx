@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import App from './components/App';
 import resources from './locales/index.js';
-import AuthProvider from './providers/AuthProvider.jsx';
-import ChatProvider from './providers/ChatProvider.jsx';
 import store from './slices';
+import AuthProvider from './providers/AuthProvider';
+import ChatProvider from './providers/ChatProvider';
 
 const init = async () => {
   const i18n = i18next.createInstance();

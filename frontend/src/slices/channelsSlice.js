@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: ["error", { "props": true,
+"ignorePropertyModificationsFor": ["state"] }] */
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 const channelsAdapter = createEntityAdapter();
@@ -10,7 +12,6 @@ const slice = createSlice({
   initialState,
   reducers: {
     setCurrentChannelId: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
       state.currentChannelId = payload;
     },
     addChannels: channelsAdapter.addMany,
@@ -18,7 +19,6 @@ const slice = createSlice({
     removeChannel: (state, { payload }) => {
       if (state.currentChannelId === payload) {
         const newId = state.ids[0];
-        // eslint-disable-next-line no-param-reassign
         state.currentChannelId = newId;
       }
       channelsAdapter.removeOne(state, payload);
@@ -26,9 +26,15 @@ const slice = createSlice({
     updateChannelName: channelsAdapter.updateOne,
   },
 });
+
 // prettier-ignore
 export const {
-  setCurrentChannelId, addChannels, addChannel, removeChannel, updateChannelName,
+  setCurrentChannelId,
+  addChannels,
+  addChannel,
+  removeChannel,
+  updateChannelName,
 } = slice.actions;
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
+
 export default slice.reducer;

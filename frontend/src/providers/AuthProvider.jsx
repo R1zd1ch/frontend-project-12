@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import axios from 'axios';
-
 import AuthContext from '../contexts/AuthContext';
 
 const AuthProvider = ({ children }) => {

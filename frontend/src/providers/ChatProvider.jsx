@@ -6,6 +6,7 @@ import ChatContext from '../contexts/ChatContext';
 
 const ChatProvider = ({ socket, children }) => {
   const dispatch = useDispatch();
+
   const context = useMemo(() => {
     const connect = () => {
       socket.connect();
@@ -16,7 +17,6 @@ const ChatProvider = ({ socket, children }) => {
       });
 
       socket.on('newChannel', (channel) => {
-        console.log(channel);
         dispatch(addChannel(channel));
       });
 
@@ -50,6 +50,7 @@ const ChatProvider = ({ socket, children }) => {
       socket.emit('renameChannel', { id, name });
     };
 
+    // prettier-ignore
     return {
       connect,
       disconnect,

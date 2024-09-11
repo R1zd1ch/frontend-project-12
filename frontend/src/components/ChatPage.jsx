@@ -2,13 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
 import axios from 'axios';
-
 import Channels from './Channels';
 import Messages from './Messages';
-
 import { setCurrentChannelId, addChannels } from '../slices/channelsSlice';
 import { addMessages } from '../slices/messagesSlice';
-
 import useAuth from '../hooks/useAuth';
 import useChat from '../hooks/useChat';
 
