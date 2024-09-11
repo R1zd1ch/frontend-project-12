@@ -1,10 +1,17 @@
-/* eslint-disable object-curly-newline */
-
-import { Button, Form, Col, Card, Row, Container, Image } from 'react-bootstrap';
+// prettier-ignore
+import {
+  Button,
+  Form,
+  Col,
+  Card,
+  Row,
+  Container,
+  Image,
+} from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useAuth from '../hooks/useAuth';
 import loginImg from '../assets/login.jpg';
 
@@ -12,33 +19,18 @@ const validationSchema = yup.object().shape({
   username: yup.string().trim().required('Обязательное поле'),
   password: yup.string().trim().required('Обязательное поле'),
 });
+
 // prettier-ignore
 const LoginPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-  const usernameInput = useRef(null);
 
   const [authFailed, setAuthFailed] = useState(false);
 
+  const usernameInput = useRef(null);
   useEffect(() => {
     usernameInput.current.focus();
   }, []);
-
-  const onSubmitFormik = async (values, { setSubmitting }) => {
-    setAuthFailed(false);
-    try {
-      await auth.logIn(values);
-      navigate('/');
-    } catch (err) {
-      setSubmitting(false);
-      if (err.isAxiosError && err.response.status === 401) {
-        setAuthFailed(true);
-        usernameInput.current.select();
-        return;
-      }
-      throw err;
-    }
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -48,7 +40,21 @@ const LoginPage = () => {
     validationSchema,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: onSubmitFormik,
+    onSubmit: async (values, { setSubmitting }) => {
+      setAuthFailed(false);
+      try {
+        await auth.logIn(values);
+        navigate('/');
+      } catch (err) {
+        setSubmitting(false);
+        if (err.isAxiosError && err.response.status === 401) {
+          setAuthFailed(true);
+          usernameInput.current.select();
+          return;
+        }
+        throw err;
+      }
+    },
   });
 
   const isUsernameInvalid = formik.errors.username && formik.touched.username;

@@ -4,6 +4,7 @@ import { PlusSquare } from 'react-bootstrap-icons';
 import ChannelButton from './ChannelButton';
 import { selectors as channelsSelectors } from '../slices/channelsSlice';
 
+// prettier-ignore
 const Channels = () => {
   const channels = useSelector(channelsSelectors.selectAll);
 

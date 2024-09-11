@@ -1,11 +1,10 @@
 /* eslint no-param-reassign: ["error", { "props": true,
 "ignorePropertyModificationsFor": ["state"] }] */
+
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 const channelsAdapter = createEntityAdapter();
-const initialState = channelsAdapter.getInitialState({
-  currentChannelId: null,
-});
+const initialState = channelsAdapter.getInitialState({ currentChannelId: null });
 
 const slice = createSlice({
   name: 'channels',

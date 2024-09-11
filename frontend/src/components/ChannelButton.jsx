@@ -1,9 +1,14 @@
+// prettier-ignore
 import {
-  Nav, Button, ButtonGroup, Dropdown,
+  Nav,
+  Button,
+  ButtonGroup,
+  Dropdown,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentChannelId } from '../slices/channelsSlice';
 
+// prettier-ignore
 const Removable = ({ id, name }) => {
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -30,6 +35,7 @@ const Removable = ({ id, name }) => {
   );
 };
 
+// prettier-ignore
 const NonRemovable = ({ id, name }) => {
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -49,10 +55,10 @@ const NonRemovable = ({ id, name }) => {
   );
 };
 
-const ChannelButton = ({ id, name, removable }) => {
+const ChannelButton = ({ id, name, removable }) => (
   <Nav.Item as="li" className="w-100">
     {removable ? <Removable id={id} name={name} /> : <NonRemovable id={id} name={name} />}
-  </Nav.Item>;
-};
+  </Nav.Item>
+);
 
 export default ChannelButton;

@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-
 import { selectors as messagesSelectors } from '../slices/messagesSlice';
 
 const MessagesBox = () => {

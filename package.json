@@ -21,7 +21,7 @@
 	},
 	"homepage": "https://github.com/R1zd1ch/frontend-project-12#readme",
 	"dependencies": {
-		"@hexlet/chat-server": "^2.0.4",
+		"@hexlet/chat-server": "^1.1.6",
 		"update": "^0.7.4"
 	},
 	"devDependencies": {
