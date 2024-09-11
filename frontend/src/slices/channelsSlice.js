@@ -14,9 +14,21 @@ const slice = createSlice({
       state.currentChannelId = payload;
     },
     addChannels: channelsAdapter.addMany,
+    addChannel: channelsAdapter.addOne,
+    removeChannel: (state, { payload }) => {
+      if (state.currentChannelId === payload) {
+        const newId = state.ids[0];
+        // eslint-disable-next-line no-param-reassign
+        state.currentChannelId = newId;
+      }
+      channelsAdapter.removeOne(state, payload);
+    },
+    updateChannelName: channelsAdapter.updateOne,
   },
 });
-
-export const { setCurrentChannelId, addChannels } = slice.actions;
+// prettier-ignore
+export const {
+  setCurrentChannelId, addChannels, addChannel, removeChannel, updateChannelName,
+} = slice.actions;
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export default slice.reducer;

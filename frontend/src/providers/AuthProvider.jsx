@@ -4,23 +4,36 @@ import axios from 'axios';
 import AuthContext from '../contexts/AuthContext';
 
 const AuthProvider = ({ children }) => {
-  const localToken = localStorage.getItem('userToken');
-  const [token, setToken] = useState(localToken);
+  const localUser = JSON.parse(localStorage.getItem('user'));
+  const [user, setUser] = useState(localUser);
 
-  const loggedIn = Boolean(token);
+  const loggedIn = Boolean(user);
+
+  const username = user ? user.username : null;
+
+  const token = user ? user.token : null;
 
   const logIn = async (userData) => {
     const res = await axios.post('/api/v1/login', userData);
-    const newToken = res.data.token;
-    localStorage.setItem('userToken', newToken);
-    setToken(newToken);
+    const newUser = res.data;
+    localStorage.setItem('user', JSON.stringify(newUser));
+    setUser(newUser);
   };
   const logOut = () => {
-    localStorage.removeItem('userToken');
-    setToken(null);
+    localStorage.removeItem('user');
+    setUser(null);
   };
 
-  const context = useMemo(() => ({ loggedIn, logIn, logOut }), [loggedIn]);
+  const context = useMemo(
+    () => ({
+      loggedIn,
+      username,
+      token,
+      logIn,
+      logOut,
+    }),
+    [loggedIn, username, token],
+  );
 
   return <AuthContext.Provider value={context}>{children}</AuthContext.Provider>;
 };

@@ -9,18 +9,18 @@ import Messages from './Messages';
 import { setCurrentChannelId, addChannels } from '../slices/channelsSlice';
 import { addMessages } from '../slices/messagesSlice';
 
-const getAuthHeader = () => {
-  const userToken = localStorage.getItem('userToken');
-
-  return userToken ? { Authorization: `Bearer ${userToken}` } : {};
-};
+import useAuth from '../hooks/useAuth';
+import useChat from '../hooks/useChat';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
+  const auth = useAuth();
+  const chat = useChat();
 
   useEffect(() => {
     const fetchContent = async () => {
-      const { data } = await axios.get('api/v1/data', { headers: getAuthHeader() });
+      const headers = auth.loggedIn ? { Authorization: `Bearer ${auth.token}` } : {};
+      const { data } = await axios.get('api/v1/data', { headers });
 
       dispatch(addChannels(data.channels));
       dispatch(addMessages(data.messages));
@@ -28,7 +28,12 @@ const ChatPage = () => {
     };
 
     fetchContent();
-  }, [dispatch]);
+    chat.connect();
+
+    return () => {
+      chat.disconnect();
+    };
+  }, [dispatch, chat, auth]);
 
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">

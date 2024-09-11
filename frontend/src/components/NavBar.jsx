@@ -12,14 +12,16 @@ const NavBar = () => {
         <Navbar.Brand as={Link} to="/">
           Hexlet Chat
         </Navbar.Brand>
-        <Button
-          onClick={() => {
-            auth.logOut();
-            navigate('/login');
-          }}
-        >
-          Выйти
-        </Button>
+        {auth.loggedIn && (
+          <Button
+            onClick={() => {
+              auth.logOut();
+              navigate('/login');
+            }}
+          >
+            Выйти
+          </Button>
+        )}
       </Container>
     </Navbar>
   );

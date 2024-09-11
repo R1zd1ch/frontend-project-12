@@ -6,6 +6,7 @@
 	"scripts": {
 		"build": "npm run build --prefix frontend",
 		"start": "start-server -s ./frontend/build",
+		"dev": "start-server & npm -C frontend start",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"postinstall": "cd frontend && npm install"
 	},
