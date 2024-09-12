@@ -22,7 +22,7 @@ const Add = () => {
 
   const handleClose = () => dispatch(close());
 
-  const validationSchema = yup.object.shape({
+  const validationSchema = yup.object().shape({
     name: yup
       .string()
       .trim()
