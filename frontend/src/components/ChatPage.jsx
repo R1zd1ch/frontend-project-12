@@ -4,6 +4,7 @@ import { Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import Channels from './Channels';
 import Messages from './Messages';
+import ChatModal from './Modals/ChatModal';
 import { setCurrentChannelId, addChannels } from '../slices/channelsSlice';
 import { addMessages } from '../slices/messagesSlice';
 import useAuth from '../hooks/useAuth';
@@ -33,12 +34,15 @@ const ChatPage = () => {
   }, [dispatch, chat, auth]);
 
   return (
-    <Container className="h-100 my-4 overflow-hidden rounded shadow">
-      <Row className="h-100 bg-white flex-md-row">
-        <Channels />
-        <Messages />
-      </Row>
-    </Container>
+    <>
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row className="h-100 bg-white flex-md-row">
+          <Channels />
+          <Messages />
+        </Row>
+      </Container>
+      <ChatModal />
+    </>
   );
 };
 
