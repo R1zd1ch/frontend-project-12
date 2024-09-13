@@ -17,12 +17,18 @@ const ChatPage = () => {
 
   useEffect(() => {
     const fetchContent = async () => {
-      const headers = auth.loggedIn ? { Authorization: `Bearer ${auth.token}` } : {};
-      const { data } = await axios.get('api/v1/data', { headers });
+      try {
+        const headers = auth.loggedIn ? { Authorization: `Bearer ${auth.token}` } : {};
+        const { data } = await axios.get('api/v1/data', { headers });
 
-      dispatch(addChannels(data.channels));
-      dispatch(addMessages(data.messages));
-      dispatch(setCurrentChannelId(data.currentChannelId));
+        dispatch(addChannels(data.channels));
+        dispatch(addMessages(data.messages));
+        dispatch(setCurrentChannelId(data.currentChannelId));
+      } catch (err) {
+        if (err.isAxiosError && err.response.status === 401) {
+          auth.logOut();
+        }
+      }
     };
 
     fetchContent();

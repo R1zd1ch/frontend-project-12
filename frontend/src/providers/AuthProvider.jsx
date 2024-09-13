@@ -23,6 +23,13 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const signUp = async (userData) => {
+    const res = await axios.post('/api/v1/singup', userData);
+    const newUser = res.data;
+    localStorage.setItem('user', JSON.stringify(newUser));
+    setUser(newUser);
+  };
+
   const context = useMemo(
     () => ({
       loggedIn,
@@ -30,6 +37,7 @@ const AuthProvider = ({ children }) => {
       token,
       logIn,
       logOut,
+      signUp,
     }),
     [loggedIn, username, token],
   );
