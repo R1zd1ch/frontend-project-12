@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const signUp = async (userData) => {
-    const res = await axios.post('/api/v1/singup', userData);
+    const res = await axios.post('/api/v1/signup', userData);
     const newUser = res.data;
     localStorage.setItem('user', JSON.stringify(newUser));
     setUser(newUser);
