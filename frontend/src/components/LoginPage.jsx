@@ -12,16 +12,13 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import loginImg from '../assets/login.jpg';
 
-const validationSchema = yup.object().shape({
-  username: yup.string().trim().required('Обязательное поле'),
-  password: yup.string().trim().required('Обязательное поле'),
-});
-
 // prettier-ignore
 const LoginPage = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -31,6 +28,11 @@ const LoginPage = () => {
   useEffect(() => {
     usernameInput.current.focus();
   }, []);
+
+  const validationSchema = yup.object().shape({
+    username: yup.string().trim().required(t('login.required')),
+    password: yup.string().trim().required(t('login.required')),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -67,10 +69,10 @@ const LoginPage = () => {
           <Card className="shadow-sm">
             <Card.Body className="p-5 row">
               <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                <Image src={loginImg} alt="Войти" roundedCircle />
+                <Image src={loginImg} alt={t('login.header')} roundedCircle />
               </Col>
               <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('login.header')}</h1>
                 <fieldset disabled={formik.isSubmitting}>
                   <Form.Group className="mb-3 form-floating" controlId="username">
                     <Form.Control
@@ -81,14 +83,14 @@ const LoginPage = () => {
                       }}
                       value={formik.values.username}
                       onBlur={formik.handleBlur}
-                      placeholder="Ваш ник"
+                      placeholder={t('login.username')}
                       autoComplete="username"
                       required
                       ref={usernameInput}
                       isInvalid={authFailed || isUsernameInvalid}
                     />
-                    <Form.Label>Ваш ник</Form.Label>
-                    <Form.Control.Feedback type="invalid" tooltip={isUsernameInvalid}>
+                    <Form.Label>{t('login.username')}</Form.Label>
+                    <Form.Control.Feedback type={isUsernameInvalid} tooltip={isUsernameInvalid}>
                       {formik.errors.username}
                     </Form.Control.Feedback>
                   </Form.Group>
@@ -102,27 +104,27 @@ const LoginPage = () => {
                       }}
                       value={formik.values.password}
                       onBlur={formik.handleBlur}
-                      placeholder="Пароль"
+                      placeholder={t('login.password')}
                       autoComplete="password"
                       isInvalid={authFailed || isPasswordInvalid}
                       required
                     />
-                    <Form.Label>Пароль</Form.Label>
+                    <Form.Label>{t('login.password')}</Form.Label>
                     <Form.Control.Feedback type="invalid" tooltip>
-                      {formik.errors.password || 'Неверные имя пользователя или пароль'}
+                      {formik.errors.password || t('login.authFailed')}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Button type="submit" variant="outline-primary" className="w-100 mb-3">
-                    Войти
+                    {t('login.submit')}
                   </Button>
                 </fieldset>
               </Form>
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>
+                <span>{t('login.newToChat')}</span>
                 {' '}
-                <Link to="/signup">Регистрация</Link>
+                <Link to="/signup">{t('login.signup')}</Link>
               </div>
             </Card.Footer>
           </Card>

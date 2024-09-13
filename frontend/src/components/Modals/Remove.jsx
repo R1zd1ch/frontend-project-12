@@ -1,9 +1,11 @@
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { close } from '../../slices/modalSlice';
 import useChat from '../../hooks/useChat';
 
 const Remove = () => {
+  const { t } = useTranslation();
   const dispath = useDispatch();
   const chat = useChat();
 
@@ -19,17 +21,17 @@ const Remove = () => {
   return (
     <Modal show={isOpen} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('modals.remove')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">Уверены?</p>
+        <p className="lead">{t('modals.confirmation')}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Отменить
+          {t('modals.cancel')}
         </Button>
         <Button variant="danger" onClick={handleDelete}>
-          Удалить
+          {t('modals.confirm')}
         </Button>
       </Modal.Footer>
     </Modal>

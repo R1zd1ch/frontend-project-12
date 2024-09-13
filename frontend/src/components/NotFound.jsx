@@ -1,17 +1,21 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import notFoundImg from '../assets/404.svg';
 
 // prettier-ignore
-const NotFound = () => (
-  <div className="text-center">
-    <img src={notFoundImg} alt="Страница не найдена" className="img-fluid h-25" />
-    <h1 className="h4 text-muted">Страница не найдена</h1>
-    <p className="text-muted">
-      Но вы можете перейти
-      {' '}
-      <Link to="/">главную страницу.</Link>
-    </p>
-  </div>
-);
+const NotFound = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="text-center">
+      <img src={notFoundImg} alt={t('notFound.header')} className="img-fluid h-25" />
+      <h1 className="h4 text-muted">{t('notFound.header')}</h1>
+      <p className="text-muted">
+        {t('notFound.message')}
+        <Link to="/">{t('notFound.linkText')}</Link>
+      </p>
+    </div>
+  );
+};
 
 export default NotFound;

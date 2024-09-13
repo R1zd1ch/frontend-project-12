@@ -4,14 +4,12 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import useChat from '../hooks/useChat';
 
-const validationSchema = yup.object().shape({
-  body: yup.string().trim().required('Обязательное поле'),
-});
-
 const MessagesForm = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const chat = useChat();
 
@@ -20,7 +18,11 @@ const MessagesForm = () => {
   const messageInput = useRef(null);
   useEffect(() => {
     messageInput.current.focus();
-  }, []);
+  }, [channelId]);
+
+  const validationSchema = yup.object().shape({
+    body: yup.string().trim().required(t('chat.required')),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +51,7 @@ const MessagesForm = () => {
             value={formik.values.body}
             onBlur={formik.handleBlur}
             name="body"
-            aria-label="Новое сообщение"
+            aria-label={t('chat.newMessage')}
             className="border-0 p-0 ps-2"
             required
             ref={messageInput}
@@ -60,7 +62,8 @@ const MessagesForm = () => {
             className="btn-group-vertical"
             disabled={Boolean(formik.errors.body)}
           >
-            <ArrowRightSquare size={20} title="Отправить" />
+            <ArrowRightSquare size={20} />
+            <span className="visually-hidden">{t('chat.send')}</span>
           </Button>
         </InputGroup>
       </Form>

@@ -6,11 +6,13 @@ import {
   Dropdown,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setCurrentChannelId } from '../slices/channelsSlice';
 import { open } from '../slices/modalSlice';
 
 // prettier-ignore
 const Removable = ({ id, name }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentId = useSelector((state) => state.channels.currentChannelId);
 
@@ -39,17 +41,15 @@ const Removable = ({ id, name }) => {
           dispatch(setCurrentChannelId(id));
         }}
       >
-        <span className="me-1">#</span>
-        {' '}
-        {name}
+        {t('channels.channelName', { name })}
       </Button>
       <Dropdown.Toggle split variant={id === currentId ? 'secondary' : ''} />
       <Dropdown.Menu>
         <Dropdown.Item as="button" onClick={handleOpenRemove}>
-          Удалить
+          {t('channels.remove')}
         </Dropdown.Item>
         <Dropdown.Item as="button" onClick={handleOpenRename}>
-          Переименовать
+          {t('channels.rename')}
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
@@ -58,6 +58,7 @@ const Removable = ({ id, name }) => {
 
 // prettier-ignore
 const NonRemovable = ({ id, name }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentId = useSelector((state) => state.channels.currentChannelId);
 
@@ -69,9 +70,7 @@ const NonRemovable = ({ id, name }) => {
         dispatch(setCurrentChannelId(id));
       }}
     >
-      <span className="me-1">#</span>
-      {' '}
-      {name}
+      {t('channels.channelName', { name })}
     </Button>
   );
 };

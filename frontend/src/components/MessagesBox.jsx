@@ -9,14 +9,13 @@ const MessagesBox = () => {
   return (
     <div className="chat-messages overflow-auto px-5" id="messages-box">
       {messages
-        && messages
-          .filter((m) => m.channelId === channelId)
-          .map(({ body, username, id }) => (
-            <div key={id} className="text-break mb-2">
-              <b>{username}</b>
-              {`: ${body}`}
-            </div>
-          ))}
+        .filter((m) => m.channelId === channelId)
+        .map(({ body, username, id }) => (
+          <div key={id} className="text-break mb-2">
+            <b>{username}</b>
+            {`: ${body}`}
+          </div>
+        ))}
     </div>
   );
 };
