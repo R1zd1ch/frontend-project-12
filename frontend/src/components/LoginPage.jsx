@@ -8,6 +8,7 @@ import {
   Container,
   Image,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -23,11 +24,6 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [authFailed, setAuthFailed] = useState(false);
-
-  const usernameInput = useRef(null);
-  useEffect(() => {
-    usernameInput.current.focus();
-  }, []);
 
   const validationSchema = yup.object().shape({
     username: yup.string().trim().required(t('login.required')),
@@ -49,15 +45,26 @@ const LoginPage = () => {
         navigate('/');
       } catch (err) {
         setSubmitting(false);
-        if (err.isAxiosError && err.response.status === 401) {
-          setAuthFailed(true);
-          usernameInput.current.select();
+        console.error(err);
+        if (!err.isAxiosError) {
+          toast.error(t('errors.unknown'));
           return;
         }
-        throw err;
+
+        if (err.response?.status === 401) {
+          setAuthFailed(true);
+          return;
+        }
+
+        toast.error(t('errors.network'));
       }
     },
   });
+
+  const usernameInput = useRef(null);
+  useEffect(() => {
+    usernameInput.current.focus();
+  }, [formik.isSubmitting]);
 
   const isUsernameInvalid = formik.errors.username && formik.touched.username;
   const isPasswordInvalid = formik.errors.password && formik.touched.password;

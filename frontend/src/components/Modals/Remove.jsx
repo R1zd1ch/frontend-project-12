@@ -1,4 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { close } from '../../slices/modalSlice';
@@ -6,6 +8,7 @@ import useChat from '../../hooks/useChat';
 
 const Remove = () => {
   const { t } = useTranslation();
+  const [isSubmitting, setSubmitting] = useState(false);
   const dispath = useDispatch();
   const chat = useChat();
 
@@ -13,9 +16,18 @@ const Remove = () => {
   const channelId = useSelector((state) => state.modal.item.id);
 
   const handleClose = () => dispath(close());
-  const handleDelete = () => {
-    chat.deleteChannel(channelId);
-    handleClose();
+  const handleDelete = async () => {
+    setSubmitting(true);
+    try {
+      await chat.deleteChannel(channelId);
+      setSubmitting(false);
+      toast.success(t('channels.removed'));
+      handleClose();
+    } catch (err) {
+      setSubmitting(false);
+      console.error(err);
+      toast.error(t('errors.network'));
+    }
   };
 
   return (
@@ -26,14 +38,16 @@ const Remove = () => {
       <Modal.Body>
         <p className="lead">{t('modals.confirmation')}</p>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          {t('modals.cancel')}
-        </Button>
-        <Button variant="danger" onClick={handleDelete}>
-          {t('modals.confirm')}
-        </Button>
-      </Modal.Footer>
+      <fieldset disabled={isSubmitting}>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            {t('modals.cancel')}
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            {t('modals.confirm')}
+          </Button>
+        </Modal.Footer>
+      </fieldset>
     </Modal>
   );
 };

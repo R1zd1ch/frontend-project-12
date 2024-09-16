@@ -1,9 +1,9 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~react-toastify/dist/ReactToastify.css';
 
-.btn:disabled {
-  background-color: transparent;
-  border-color: transparent;
+.btn-send:disabled {
+  background-color: transparent !important;
+  border-color: transparent !important;
 }
 
 .min-w-auto {

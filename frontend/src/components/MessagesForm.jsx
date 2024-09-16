@@ -1,5 +1,6 @@
 import { Form, InputGroup, Button } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
@@ -15,11 +16,6 @@ const MessagesForm = () => {
 
   const channelId = useSelector((state) => state.channels.currentChannelId);
 
-  const messageInput = useRef(null);
-  useEffect(() => {
-    messageInput.current.focus();
-  }, [channelId]);
-
   const validationSchema = yup.object().shape({
     body: yup.string().trim().required(t('chat.required')),
   });
@@ -29,43 +25,55 @@ const MessagesForm = () => {
       body: '',
     },
     validationSchema,
-    onSubmit: ({ body }) => {
+    onSubmit: async ({ body }, { setSubmitting }) => {
       const message = {
         body,
         channelId,
         username: auth.username,
       };
-      chat.sendMessage(message);
-      formik.resetForm();
-      messageInput.current.focus();
+      try {
+        await chat.sendMessage(message);
+        formik.resetForm();
+      } catch (err) {
+        setSubmitting(false);
+        console.error(err);
+        toast.error(t('errors.network'));
+      }
     },
   });
+
+  const messageInput = useRef(null);
+  useEffect(() => {
+    messageInput.current.focus();
+  }, [channelId, formik.isSubmitting]);
 
   return (
     <div className="mt-auto px-5 py-3">
       <Form noValidate className="py-1 border rounded-2" onSubmit={formik.handleSubmit}>
-        <InputGroup>
-          <Form.Control
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.body}
-            onBlur={formik.handleBlur}
-            name="body"
-            aria-label={t('chat.newMessage')}
-            className="border-0 p-0 ps-2"
-            required
-            ref={messageInput}
-          />
-          <Button
-            variant=""
-            type="submit"
-            className="btn-group-vertical"
-            disabled={Boolean(formik.errors.body)}
-          >
-            <ArrowRightSquare size={20} />
-            <span className="visually-hidden">{t('chat.send')}</span>
-          </Button>
-        </InputGroup>
+        <fieldset disabled={formik.isSubmitting}>
+          <InputGroup>
+            <Form.Control
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.body}
+              onBlur={formik.handleBlur}
+              name="body"
+              aria-label={t('chat.newMessage')}
+              className="border-0 p-0 ps-2"
+              required
+              ref={messageInput}
+            />
+            <Button
+              variant=""
+              type="submit"
+              className="btn-group-vertical btn-send"
+              disabled={Boolean(formik.errors.body)}
+            >
+              <ArrowRightSquare size={20} />
+              <span className="visually-hidden">{t('chat.send')}</span>
+            </Button>
+          </InputGroup>
+        </fieldset>
       </Form>
     </div>
   );

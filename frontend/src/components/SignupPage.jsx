@@ -2,6 +2,7 @@
 import {
   Button, Form, Col, Card, Row, Container, Image,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -16,11 +17,6 @@ const SignupPage = () => {
   const navigate = useNavigate();
 
   const [authFailed, setAuthFailed] = useState(false);
-
-  const usernameInput = useRef(null);
-  useEffect(() => {
-    usernameInput.current.focus();
-  }, []);
 
   const validationSchema = yup.object().shape({
     username: yup
@@ -56,15 +52,25 @@ const SignupPage = () => {
         navigate('/');
       } catch (err) {
         setSubmitting(false);
-        if (err.isAxiosError && err.response.status === 409) {
-          setAuthFailed(true);
-          usernameInput.current.select();
+        console.error(err);
+        if (!err.isAxiosError) {
+          toast.error(t('errors.unknown'));
           return;
         }
-        throw err;
+
+        if (err.response?.status === 409) {
+          setAuthFailed(true);
+          return;
+        }
+        toast.error(t('errors.network'));
       }
     },
   });
+
+  const usernameInput = useRef(null);
+  useEffect(() => {
+    usernameInput.current.focus();
+  }, [formik.isSubmitting]);
 
   const isUsernameInvalid = formik.errors.username && formik.touched.username;
   const isPasswordInvalid = formik.errors.password && formik.touched.password;

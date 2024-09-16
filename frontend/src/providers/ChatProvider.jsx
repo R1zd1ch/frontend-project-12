@@ -39,20 +39,20 @@ const ChatProvider = ({ socket, children }) => {
       socket.disconnect();
     };
 
-    const sendMessage = (message) => {
-      socket.emit('newMessage', message);
+    const sendMessage = async (message) => {
+      await socket.timeout(3000).emitWithAck('newMessage', message);
     };
 
-    const createChannel = (name) => {
-      socket.emit('newChannel', { name });
+    const createChannel = async (name) => {
+      await socket.timeout(3000).emitWithAck('newChannel', { name });
     };
 
-    const deleteChannel = (id) => {
-      socket.emit('removeChannel', { id });
+    const deleteChannel = async (id) => {
+      await socket.timeout(3000).emitWithAck('removeChannel', { id });
     };
 
-    const renameChannel = (id, name) => {
-      socket.emit('renameChannel', { id, name });
+    const renameChannel = async (id, name) => {
+      await socket.timeout(3000).emitWithAck('renameChannel', { id, name });
     };
 
     // prettier-ignore
