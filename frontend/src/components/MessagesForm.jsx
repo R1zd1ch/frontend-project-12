@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 import useAuth from '../hooks/useAuth';
 import useChat from '../hooks/useChat';
 
@@ -26,8 +27,9 @@ const MessagesForm = () => {
     },
     validationSchema,
     onSubmit: async ({ body }, { setSubmitting }) => {
+      const cleanBody = leoProfanity.clean(body);
       const message = {
-        body,
+        body: cleanBody,
         channelId,
         username: auth.username,
       };

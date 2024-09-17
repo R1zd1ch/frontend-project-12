@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice';
 import { close } from '../../slices/modalSlice';
 import useChat from '../../hooks/useChat';
@@ -27,7 +28,8 @@ const Add = () => {
       .required(t('modals.required'))
       .min(3, t('modals.min'))
       .max(20, t('modals.max'))
-      .notOneOf(channelsNames, t('modals.uniq')),
+      .notOneOf(channelsNames, t('modals.uniq'))
+      .notOneOf(leoProfanity.list(), t('modals.profanity')),
   });
 
   const formik = useFormik({
