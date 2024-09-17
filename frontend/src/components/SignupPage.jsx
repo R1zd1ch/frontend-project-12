@@ -90,8 +90,7 @@ const SignupPage = () => {
                   <Image src={signupImg} alt={t('signup.header')} roundedCircle />
                 </div>
               </Col>
-              <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}></Form>
-              <Form className="w-50" onSubmit={formik.handleSubmit}>
+              <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
                 <h1 className="text-center mb-4">{t('signup.header')}</h1>
                 <fieldset disabled={formik.isSubmitting}>
                   <Form.Group className="mb-3 form-floating" controlId="username">
