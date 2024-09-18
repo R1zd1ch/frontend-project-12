@@ -6,12 +6,14 @@ import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import leoProfanity from 'leo-profanity';
 import useAuth from '../hooks/useAuth';
 import useChat from '../hooks/useChat';
 
 const MessagesForm = () => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
   const auth = useAuth();
   const chat = useChat();
 
@@ -37,6 +39,7 @@ const MessagesForm = () => {
         await chat.sendMessage(message);
         formik.resetForm();
       } catch (err) {
+        rollbar.error('Error while sending a message', err);
         setSubmitting(false);
         console.error(err);
         toast.error(t('errors.network'));

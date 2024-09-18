@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -14,6 +15,7 @@ import useChat from '../hooks/useChat';
 
 const ChatPage = () => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
   const dispatch = useDispatch();
   const auth = useAuth();
   const chat = useChat();
@@ -32,6 +34,7 @@ const ChatPage = () => {
         setFetching(false);
       } catch (err) {
         if (!err.isAxiosError) {
+          rollbar.error('Unknown error while trying to fetch initial data', err);
           toast.error(t('errors.unknown'));
           return;
         }
@@ -40,7 +43,7 @@ const ChatPage = () => {
           auth.logOut();
           return;
         }
-
+        rollbar.error('Network error while trying to fetch initial data', err);
         toast.error(t('errors.network'));
       }
     };
@@ -51,7 +54,7 @@ const ChatPage = () => {
     return () => {
       chat.disconnect();
     };
-  }, [dispatch, chat, auth, t]);
+  }, [dispatch, chat, auth, t, rollbar]);
 
   return isFetching ? (
     <div className="h-100 d-flex justify-content-center align-items-center">

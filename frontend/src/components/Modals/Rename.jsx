@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import leoProfanity from 'leo-profanity';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice';
 import { close } from '../../slices/modalSlice';
@@ -12,6 +13,7 @@ import useChat from '../../hooks/useChat';
 
 const Rename = () => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
   const dispatch = useDispatch();
   const chat = useChat();
 
@@ -47,6 +49,7 @@ const Rename = () => {
         toast.success(t('channels.renamed'));
         handleClose();
       } catch (err) {
+        rollbar.error('Error while renaming channel', err);
         setSubmitting(false);
         console.error(err);
         toast.error(t('errors.network'));
