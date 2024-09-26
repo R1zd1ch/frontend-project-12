@@ -82,6 +82,9 @@ const Add = () => {
               required
               ref={nameInput}
             />
+            <label className="visually-hidden" htmlFor="name">
+              {t('modals.channelName')}
+            </label>
             <Form.Control.Feedback type="invalid" className="invalid-feedback">
               {formik.errors.name}
             </Form.Control.Feedback>
