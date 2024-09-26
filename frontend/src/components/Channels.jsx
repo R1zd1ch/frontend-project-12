@@ -6,7 +6,6 @@ import ChannelButton from './ChannelButton';
 import channelsSelectors from '../selectors/channelsSelectors';
 import { open } from '../slices/modalSlice';
 
-// prettier-ignore
 const Channels = () => {
   const { t } = useTranslation();
 

@@ -1,4 +1,3 @@
-// prettier-ignore
 import {
   Button,
   Form,
@@ -20,7 +19,6 @@ import routes from '../routes';
 import useAuth from '../hooks/useAuth';
 import loginImg from '../assets/login.jpg';
 
-// prettier-ignore
 const LoginPage = () => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
@@ -74,7 +72,6 @@ const LoginPage = () => {
   useEffect(() => {
     usernameInput.current.focus();
   }, [formik.isSubmitting]);
-  // With isSubmitting dependency, focus will be on input after sending request
 
   const isUsernameInvalid = formik.errors.username && formik.touched.username;
   const isPasswordInvalid = formik.errors.password && formik.touched.password;

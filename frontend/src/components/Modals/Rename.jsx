@@ -62,8 +62,7 @@ const Rename = () => {
   useEffect(() => {
     nameInput.current.select();
   }, [formik.isSubmitting]);
-  // With isSubmitting dependency, focus will be on input after sending request
-
+  
   const isNameInvalid = formik.errors.name && formik.touched.name;
 
   return (

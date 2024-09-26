@@ -50,7 +50,6 @@ const ChatProvider = ({ socket, children }) => {
       await socket.timeout(3000).emitWithAck('renameChannel', { id, name });
     };
 
-    // prettier-ignore
     return {
       connect,
       disconnect,
