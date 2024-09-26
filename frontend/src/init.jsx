@@ -12,6 +12,7 @@ import store from './slices';
 
 import AuthProvider from './providers/AuthProvider';
 import ChatProvider from './providers/ChatProvider';
+import routes from './routes.js';
 
 const init = async () => {
   const i18n = i18next.createInstance();
