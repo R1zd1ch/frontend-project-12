@@ -13,13 +13,6 @@ import store from './slices';
 import AuthProvider from './providers/AuthProvider';
 import ChatProvider from './providers/ChatProvider';
 
-import App from './components/App';
-import resources from './locales/index.js';
-import store from './slices';
-
-import AuthProvider from './providers/AuthProvider';
-import ChatProvider from './providers/ChatProvider';
-
 const init = async () => {
   const i18n = i18next.createInstance();
 
