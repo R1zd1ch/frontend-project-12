@@ -20,8 +20,7 @@
 	},
 	"homepage": "https://github.com/R1zd1ch/frontend-project-12#readme",
 	"dependencies": {
-		"@hexlet/chat-server": "^1.1.6",
-		"update": "^0.4.2"
+		"@hexlet/chat-server": "^1.1.6"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",

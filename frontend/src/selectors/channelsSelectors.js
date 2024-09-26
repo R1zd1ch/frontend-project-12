@@ -1,4 +1,5 @@
 import { selectors } from '../slices/channelsSlice';
+
 const channelsSelectors = {
   ...selectors,
   selectCurrentChannelId: (state) => state.channels.currentChannelId,
