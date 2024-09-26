@@ -10,22 +10,9 @@
 		"dev": "start-server & npm -C frontend start",
 		"postinstall": "cd frontend && npm install"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/R1zd1ch/frontend-project-12.git"
-	},
 	"author": "EvgeniyCheraev",
 	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/R1zd1ch/frontend-project-12/issues"
-	},
-	"homepage": "https://github.com/R1zd1ch/frontend-project-12#readme",
 	"dependencies": {
 		"@hexlet/chat-server": "^1.1.6"
-	},
-	"devDependencies": {
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-		"@playwright/test": "^1.47.2",
-		"@types/node": "^22.7.3"
 	}
 }
