@@ -1,12 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '../slices/messagesSlice';
-import {
-  addChannel,
-  removeChannel,
-  updateChannelName,
-  setCurrentChannelId,
-} from '../slices/channelsSlice';
+import { addChannel, removeChannel, updateChannelName } from '../slices/channelsSlice';
 import ChatContext from '../contexts/ChatContext';
 
 const ChatProvider = ({ socket, children }) => {
@@ -22,7 +17,6 @@ const ChatProvider = ({ socket, children }) => {
 
       socket.on('newChannel', (channel) => {
         dispatch(addChannel(channel));
-        dispatch(setCurrentChannelId(channel.id));
       });
 
       socket.on('removeChannel', ({ id }) => {
@@ -44,7 +38,8 @@ const ChatProvider = ({ socket, children }) => {
     };
 
     const createChannel = async (name) => {
-      await socket.timeout(3000).emitWithAck('newChannel', { name });
+      const { data } = await socket.timeout(3000).emitWithAck('newChannel', { name });
+      return data;
     };
 
     const deleteChannel = async (id) => {

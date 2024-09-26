@@ -10,6 +10,7 @@ import { useRollbar } from '@rollbar/react';
 import leoProfanity from 'leo-profanity';
 import useAuth from '../hooks/useAuth';
 import useChat from '../hooks/useChat';
+import channelsSelectors from '../selectors/channelsSelectors';
 
 const MessagesForm = () => {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ const MessagesForm = () => {
   const auth = useAuth();
   const chat = useChat();
 
-  const channelId = useSelector((state) => state.channels.currentChannelId);
+  const channelId = useSelector(channelsSelectors.selectCurrentChannelId);
 
   const validationSchema = yup.object().shape({
     body: yup.string().trim().required(t('chat.required')),

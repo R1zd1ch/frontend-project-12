@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { close } from '../../slices/modalSlice';
+import modalSelectors from '../../selectors/modalSelectors';
 import useChat from '../../hooks/useChat';
 
 const Remove = () => {
@@ -14,8 +15,8 @@ const Remove = () => {
   const dispath = useDispatch();
   const chat = useChat();
 
-  const isOpen = useSelector((state) => state.modal.isOpen);
-  const channelId = useSelector((state) => state.modal.item.id);
+  const isOpen = useSelector(modalSelectors.selectIsOpen);
+  const channelId = useSelector(modalSelectors.selectItemId);
 
   const handleClose = () => dispath(close());
   const handleDelete = async () => {

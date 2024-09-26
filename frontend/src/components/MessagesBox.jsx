@@ -1,22 +1,24 @@
+import ScrollToBottom from 'react-scroll-to-bottom';
 import { useSelector } from 'react-redux';
-import { selectors as messagesSelectors } from '../slices/messagesSlice';
+import messagesSelectors from '../selectors/messagesSelectors';
 
 const MessagesBox = () => {
-  const messages = useSelector(messagesSelectors.selectAll);
-  const channelId = useSelector((state) => state.channels.currentChannelId);
+  const messages = useSelector(messagesSelectors.selectCurrentChannelMessages);
 
   // prettier-ignore
   return (
-    <div className="chat-messages overflow-auto px-5" id="messages-box">
-      {messages
-        .filter((m) => m.channelId === channelId)
-        .map(({ body, username, id }) => (
-          <div key={id} className="text-break mb-2">
-            <b>{username}</b>
-            {`: ${body}`}
-          </div>
-        ))}
-    </div>
+    <ScrollToBottom
+      className="chat-messages overflow-auto px-5"
+      id="messages-box"
+      followButtonClassName="follow-button"
+    >
+      {messages.map(({ body, username, id }) => (
+        <div key={id} className="text-break mb-2">
+          <b>{username}</b>
+          {`: ${body}`}
+        </div>
+      ))}
+    </ScrollToBottom>
   );
 };
 

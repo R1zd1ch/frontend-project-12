@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
+import modalSelectors from '../../selectors/modalSelectors';
 import Add from './Add';
 import Remove from './Remove';
 import Rename from './Rename';
 
 const ChatModal = () => {
-  const modalType = useSelector((state) => state.modal.type);
-  const isModalOpen = useSelector((state) => state.modal.isOpen);
+  const modalType = useSelector(modalSelectors.selectType);
+  const isModalOpen = useSelector(modalSelectors.selectIsOpen);
 
   const modals = {
     remove: Remove,

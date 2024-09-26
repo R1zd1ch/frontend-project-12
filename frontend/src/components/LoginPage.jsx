@@ -11,10 +11,12 @@ import {
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
+import routes from '../routes';
 import useAuth from '../hooks/useAuth';
 import loginImg from '../assets/login.jpg';
 
@@ -43,8 +45,10 @@ const LoginPage = () => {
     onSubmit: async (values, { setSubmitting }) => {
       setAuthFailed(false);
       try {
-        await auth.logIn(values);
-        navigate('/');
+        const res = await axios.post(routes.loginApi(), values);
+        const userData = res.data;
+        auth.logIn(userData);
+        navigate(routes.chatPage());
       } catch (err) {
         setSubmitting(false);
         console.error(err);
@@ -132,9 +136,8 @@ const LoginPage = () => {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>{t('login.newToChat')}</span>
-                {' '}
-                <Link to="/signup">{t('login.signup')}</Link>
+                <span>{t('login.newToChat')}</span>{' '}
+                <Link to={routes.signupPage()}>{t('login.signup')}</Link>
               </div>
             </Card.Footer>
           </Card>

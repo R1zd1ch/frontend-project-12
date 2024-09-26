@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import leoProfanity from 'leo-profanity';
-import { selectors as channelsSelectors } from '../../slices/channelsSlice';
 import { close } from '../../slices/modalSlice';
+import channelsSelectors from '../../selectors/channelsSelectors';
+import modalSelectors from '../../selectors/modalSelectors';
 import useChat from '../../hooks/useChat';
 
 const Rename = () => {
@@ -17,11 +18,10 @@ const Rename = () => {
   const dispatch = useDispatch();
   const chat = useChat();
 
-  const isOpen = useSelector((state) => state.modal.isOpen);
-  const channels = useSelector(channelsSelectors.selectAll);
-  const channelsNames = channels.map(({ name }) => name);
-  const channelId = useSelector((state) => state.modal.item.id);
-  const channelName = useSelector((state) => state.modal.item.name);
+  const isOpen = useSelector(modalSelectors.selectIsOpen);
+  const channelsNames = useSelector(channelsSelectors.selectChannelsNames);
+  const channelId = useSelector(modalSelectors.selectItemId);
+  const channelName = useSelector(modalSelectors.selectItemName);
 
   const handleClose = () => dispatch(close());
 

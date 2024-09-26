@@ -5,6 +5,7 @@ import { useRollbar } from '@rollbar/react';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import routes from '../routes';
 import Channels from './Channels';
 import Messages from './Messages';
 import ChatModal from './Modals/ChatModal';
@@ -25,8 +26,8 @@ const ChatPage = () => {
     const fetchContent = async () => {
       try {
         setFetching(true);
-        const headers = auth.loggedIn ? { Authorization: `Bearer ${auth.token}` } : {};
-        const { data } = await axios.get('api/v1/data', { headers });
+        const { headers } = auth;
+        const { data } = await axios.get(routes.dataApi(), { headers });
 
         dispatch(addChannels(data.channels));
         dispatch(addMessages(data.messages));

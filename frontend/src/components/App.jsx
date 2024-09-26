@@ -4,14 +4,15 @@ import NotFound from './NotFound';
 import LoginPage from './LoginPage';
 import PrivateRoute from './PrivateRoute';
 import SignupPage from './SignupPage';
+import routes from '../routes';
 
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Root />}>
+      <Route path={routes.chatPage()} element={<Root />}>
         <Route index element={<PrivateRoute />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="signup" element={<SignupPage />} />
+        <Route path={routes.loginPage()} element={<LoginPage />} />
+        <Route path={routes.signupPage()} element={<SignupPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

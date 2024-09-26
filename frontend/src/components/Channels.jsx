@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Col, Button, Nav } from 'react-bootstrap';
 import { PlusSquare } from 'react-bootstrap-icons';
 import ChannelButton from './ChannelButton';
-import { selectors as channelsSelectors } from '../slices/channelsSlice';
+import channelsSelectors from '../selectors/channelsSelectors';
 import { open } from '../slices/modalSlice';
 
 // prettier-ignore
