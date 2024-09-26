@@ -5,8 +5,10 @@ import messagesSelectors from '../selectors/messagesSelectors';
 
 const MessagesHeader = () => {
   const { t } = useTranslation();
+
   const currentChannel = useSelector(channelsSelectors.selectCurrentChannel);
   const messagesCount = useSelector(messagesSelectors.selectMessagesCount);
+
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
       <p className="m-0">

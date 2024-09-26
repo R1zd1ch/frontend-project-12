@@ -18,6 +18,7 @@ import signupImg from '../assets/signup.jpg';
 const SignupPage = () => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
+
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -29,7 +30,6 @@ const SignupPage = () => {
       .trim()
       .required(t('signup.required'))
       .min(3, t('signup.usernameConstraints'))
-      .max(20, t('signup.usernameConstraints'))
       .max(20, t('signup.usernameConstraints'))
       .notOneOf(leoProfanity.list(), t('signup.profanity')),
     password: yup.string().trim().required(t('signup.required')).min(6, t('signup.passMin')),
@@ -72,6 +72,7 @@ const SignupPage = () => {
           setAuthFailed(true);
           return;
         }
+
         rollbar.error('Network error while trying to signup', err);
         toast.error(t('errors.network'));
       }
@@ -82,6 +83,7 @@ const SignupPage = () => {
   useEffect(() => {
     usernameInput.current.focus();
   }, [formik.isSubmitting]);
+  // With isSubmitting dependency, focus will be on input after sending request
 
   const isUsernameInvalid = formik.errors.username && formik.touched.username;
   const isPasswordInvalid = formik.errors.password && formik.touched.password;
@@ -94,9 +96,7 @@ const SignupPage = () => {
           <Card className="shadow-sm">
             <Card.Body className="p-5 row">
               <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                <div>
-                  <Image src={signupImg} alt={t('signup.header')} roundedCircle />
-                </div>
+                <Image src={signupImg} alt={t('signup.header')} roundedCircle />
               </Col>
               <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
                 <h1 className="text-center mb-4">{t('signup.header')}</h1>

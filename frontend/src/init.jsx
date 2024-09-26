@@ -13,6 +13,13 @@ import store from './slices';
 import AuthProvider from './providers/AuthProvider';
 import ChatProvider from './providers/ChatProvider';
 
+import App from './components/App';
+import resources from './locales/index.js';
+import store from './slices';
+
+import AuthProvider from './providers/AuthProvider';
+import ChatProvider from './providers/ChatProvider';
+
 const init = async () => {
   const i18n = i18next.createInstance();
 
@@ -23,17 +30,15 @@ const init = async () => {
 
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
-    environment: 'production',
+    environment: process.env.NODE_ENV === 'production' ? 'production' : 'testenv',
     captureUncaught: true,
     captureUnhandledRejections: true,
   };
 
-  // const rollbar = new Rollbar(rollbarConfig);
-
   const profanityRu = leoProfanity.getDictionary('ru');
   leoProfanity.add(profanityRu);
 
-  const socket = io('/', { autoConnect: false });
+  const socket = io(routes.chatPage(), { autoConnect: false });
 
   return (
     <RollbarProvider config={rollbarConfig}>

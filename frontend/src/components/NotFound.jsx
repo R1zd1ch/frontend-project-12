@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import routes from '../routes';
 import notFoundImg from '../assets/404.svg';
 
-// prettier-ignore
 const NotFound = () => {
   const { t } = useTranslation();
 

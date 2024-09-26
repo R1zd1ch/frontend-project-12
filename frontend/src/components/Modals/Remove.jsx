@@ -11,14 +11,16 @@ import useChat from '../../hooks/useChat';
 const Remove = () => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
+
   const [isSubmitting, setSubmitting] = useState(false);
-  const dispath = useDispatch();
+
+  const dispatch = useDispatch();
   const chat = useChat();
 
   const isOpen = useSelector(modalSelectors.selectIsOpen);
   const channelId = useSelector(modalSelectors.selectItemId);
 
-  const handleClose = () => dispath(close());
+  const handleClose = () => dispatch(close());
   const handleDelete = async () => {
     setSubmitting(true);
     try {

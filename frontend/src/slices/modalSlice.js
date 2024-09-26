@@ -18,7 +18,6 @@ const slice = createSlice({
       state.type = type;
       state.item = item;
     },
-
     close: (state) => {
       state.isOpen = false;
       state.type = null;
@@ -28,4 +27,5 @@ const slice = createSlice({
 });
 
 export const { open, close } = slice.actions;
+
 export default slice.reducer;

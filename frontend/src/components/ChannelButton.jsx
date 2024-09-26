@@ -14,6 +14,7 @@ import channelsSelectors from '../selectors/channelsSelectors';
 // prettier-ignore
 const Removable = ({ id, name }) => {
   const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const currentId = useSelector(channelsSelectors.selectCurrentChannelId);
 
@@ -44,7 +45,9 @@ const Removable = ({ id, name }) => {
       >
         {t('channels.channelName', { name })}
       </Button>
-      <Dropdown.Toggle split variant={id === currentId ? 'secondary' : ''} />
+      <Dropdown.Toggle split variant={id === currentId ? 'secondary' : ''}>
+        <span className="visually-hidden">{t('channels.menu')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item as="button" onClick={handleOpenRemove}>
           {t('channels.remove')}
@@ -57,9 +60,9 @@ const Removable = ({ id, name }) => {
   );
 };
 
-// prettier-ignore
 const NonRemovable = ({ id, name }) => {
   const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const currentId = useSelector(channelsSelectors.selectCurrentChannelId);
 

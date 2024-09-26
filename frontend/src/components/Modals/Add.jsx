@@ -16,6 +16,7 @@ import useChat from '../../hooks/useChat';
 const Add = () => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
+
   const dispatch = useDispatch();
   const chat = useChat();
 
@@ -79,6 +80,7 @@ const Add = () => {
               value={formik.values.name}
               onBlur={formik.handleBlur}
               name="name"
+              id="name"
               aria-label={t('modals.channelName')}
               className="mb-2"
               isInvalid={isNameInvalid}

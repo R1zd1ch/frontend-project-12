@@ -7,6 +7,7 @@ import LangSwitch from './LangSwitch';
 
 const NavBar = () => {
   const { t } = useTranslation();
+
   const navigate = useNavigate();
   const auth = useAuth();
 

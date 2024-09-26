@@ -17,9 +17,11 @@ import useChat from '../hooks/useChat';
 const ChatPage = () => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
+
   const dispatch = useDispatch();
   const auth = useAuth();
   const chat = useChat();
+
   const [isFetching, setFetching] = useState(true);
 
   useEffect(() => {
@@ -44,6 +46,7 @@ const ChatPage = () => {
           auth.logOut();
           return;
         }
+
         rollbar.error('Network error while trying to fetch initial data', err);
         toast.error(t('errors.network'));
       }
@@ -75,4 +78,5 @@ const ChatPage = () => {
     </>
   );
 };
+
 export default ChatPage;

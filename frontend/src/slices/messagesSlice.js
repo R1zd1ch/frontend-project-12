@@ -2,6 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import { removeChannel } from './channelsSlice';
 
 const messagesAdapter = createEntityAdapter();
+
 const initialState = messagesAdapter.getInitialState();
 
 const slice = createSlice({

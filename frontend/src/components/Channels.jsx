@@ -9,6 +9,7 @@ import { open } from '../slices/modalSlice';
 // prettier-ignore
 const Channels = () => {
   const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
 

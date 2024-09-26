@@ -5,7 +5,6 @@ import messagesSelectors from '../selectors/messagesSelectors';
 const MessagesBox = () => {
   const messages = useSelector(messagesSelectors.selectCurrentChannelMessages);
 
-  // prettier-ignore
   return (
     <ScrollToBottom
       className="chat-messages overflow-auto px-5"

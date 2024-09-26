@@ -9,9 +9,9 @@ const ChatModal = () => {
   const isModalOpen = useSelector(modalSelectors.selectIsOpen);
 
   const modals = {
+    add: Add,
     remove: Remove,
     rename: Rename,
-    add: Add,
   };
 
   const Component = modals[modalType];

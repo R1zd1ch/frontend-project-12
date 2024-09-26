@@ -24,6 +24,7 @@ import loginImg from '../assets/login.jpg';
 const LoginPage = () => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
+
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -62,6 +63,7 @@ const LoginPage = () => {
           setAuthFailed(true);
           return;
         }
+
         rollbar.error('Network error while trying to login', err);
         toast.error(t('errors.network'));
       }
@@ -72,6 +74,7 @@ const LoginPage = () => {
   useEffect(() => {
     usernameInput.current.focus();
   }, [formik.isSubmitting]);
+  // With isSubmitting dependency, focus will be on input after sending request
 
   const isUsernameInvalid = formik.errors.username && formik.touched.username;
   const isPasswordInvalid = formik.errors.password && formik.touched.password;
@@ -104,7 +107,7 @@ const LoginPage = () => {
                       isInvalid={authFailed || isUsernameInvalid}
                     />
                     <Form.Label>{t('login.username')}</Form.Label>
-                    <Form.Control.Feedback type={isUsernameInvalid} tooltip={isUsernameInvalid}>
+                    <Form.Control.Feedback type="invalid" tooltip={isUsernameInvalid}>
                       {formik.errors.username}
                     </Form.Control.Feedback>
                   </Form.Group>
@@ -137,7 +140,6 @@ const LoginPage = () => {
             <Card.Footer className="p-4">
               <div className="text-center">
                 <span>{t('login.newToChat')}</span>
-                {' '}
                 <Link to={routes.signupPage()}>{t('login.signup')}</Link>
               </div>
             </Card.Footer>
