@@ -6,7 +6,6 @@
 	"scripts": {
 		"build": "npm run build --prefix frontend",
 		"start": "start-server -s ./frontend/build",
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "start-server & npm -C frontend start",
 		"postinstall": "cd frontend && npm install"
 	},
@@ -14,5 +13,9 @@
 	"license": "ISC",
 	"dependencies": {
 		"@hexlet/chat-server": "^1.1.6"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.47.2",
+		"@types/node": "^22.7.3"
 	}
 }

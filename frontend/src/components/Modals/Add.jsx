@@ -32,7 +32,6 @@ const Add = () => {
       .required(t('modals.required'))
       .min(3, t('modals.min'))
       .max(20, t('modals.max'))
-      .notOneOf(leoProfanity.list(), t('modals.profanity'))
       .notOneOf(channelsNames, t('modals.uniq')),
   });
 
@@ -44,8 +43,9 @@ const Add = () => {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values, { setSubmitting }) => {
+      const cleanName = leoProfanity.clean(values.name); // Заменяем нецензурные слова на звёздочки
       try {
-        const channel = await chat.createChannel(values.name);
+        const channel = await chat.createChannel(cleanName);
         dispatch(addChannel(channel));
         dispatch(setCurrentChannelId(channel.id));
         toast.success(t('channels.created'));
