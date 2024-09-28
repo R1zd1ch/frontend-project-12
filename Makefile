@@ -20,4 +20,4 @@ deploy:
 	git push heroku main
 
 build:
-	make build-frontend
+	npm run build

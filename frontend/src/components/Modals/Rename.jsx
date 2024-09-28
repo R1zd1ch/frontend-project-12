@@ -62,7 +62,7 @@ const Rename = () => {
   useEffect(() => {
     nameInput.current.select();
   }, [formik.isSubmitting]);
-  
+
   const isNameInvalid = formik.errors.name && formik.touched.name;
 
   return (
